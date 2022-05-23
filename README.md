@@ -1,8 +1,6 @@
 # Reference
 mujoco 2.1.0: https://github.com/deepmind/mujoco/releases
 
-patchelf error: https://www.howtoinstall.me/ubuntu/18-04/patchelf/
-
 sudo apt-get install build-essential libssl-dev libffi-dev python-dev libglew-dev libglew patchelf libncurses5-dev
 
 # Soft-Module
