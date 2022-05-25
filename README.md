@@ -17,7 +17,7 @@ Our project page is at [https://rchalyang.github.io/SoftModule/](https://rchalya
 
 ### Environement Requirements (modified)
 * Python 3
-* Pytorch 1.10.2
+* Pytorch 1.11.0
 * posix_ipc
 * tensorboardX
 * tabulate, gym
