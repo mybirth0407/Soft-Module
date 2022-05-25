@@ -1,7 +1,7 @@
 # Reference
 mujoco 2.1.0: https://github.com/deepmind/mujoco/releases
 
-sudo apt-get install build-essential libssl-dev libffi-dev python-dev libglew-dev libglew patchelf libncurses5-dev
+sudo apt-get install build-essential libssl-dev libffi-dev libglew-dev patchelf libncurses5-dev
 
 # Soft-Module
 
