@@ -3,6 +3,8 @@ mujoco 2.1.0: https://github.com/deepmind/mujoco/releases
 
 sudo apt-get install build-essential libssl-dev libffi-dev python-dev python3-dev libglew-dev patchelf libncurses5-dev libosmesa6-dev
 
+pip install posix_ipc tensorboardX tabulate seaborn
+
 # Soft-Module
 
 Implementation for "Multi-task Reinforcement Learning with Soft Modularization"
