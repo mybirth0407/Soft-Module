@@ -27,8 +27,7 @@ class MTSAC(TwinSACQ):
         self.sample_key = ["obs", "next_obs", "acts", "rewards",
                            "terminals",  "task_idxs"]
 
-        self.pf_flag = isinstance(self.pf,
-                                  policies.EmbeddingGuassianContPolicyBase)
+        self.pf_flag = isinstance(self.pf, policies.EmbeddingGuassianContPolicyBase)
 
         self.idx_flag = isinstance(self.pf, policies.MultiHeadGuassianContPolicy)
 
@@ -49,7 +48,7 @@ class MTSAC(TwinSACQ):
             embedding_inputs = batch["embedding_inputs"]
 
         if self.idx_flag:
-            task_idx    = batch['task_idxs']
+            task_idx = batch['task_idxs']
 
         rewards = torch.Tensor(rewards).to(self.device)
         terminals = torch.Tensor(terminals).to(self.device)
@@ -61,7 +60,7 @@ class MTSAC(TwinSACQ):
             embedding_inputs = torch.Tensor(embedding_inputs).to(self.device)
 
         if self.idx_flag:
-            task_idx    = torch.Tensor(task_idx).to( self.device ).long()
+            task_idx = torch.Tensor(task_idx).to( self.device ).long()
 
         self.pf.train()
         self.qf1.train()
@@ -118,7 +117,8 @@ class MTSAC(TwinSACQ):
             alphas = alphas.expand((batch_size, self.task_nums)).unsqueeze(-1)
             # (batch_size, 1)
             if self.temp_reweight:
-                softmax_temp = F.softmax(-self.log_alpha.detach()).unsqueeze(0)
+                # softmax_temp = F.softmax(-self.log_alpha.detach()).unsqueeze(0)
+                softmax_temp = F.gumbel_softmax(-self.log_alpha.detach()).unsqueeze(0)
                 reweight_coeff = softmax_temp.expand((batch_size,
                                                       self.task_nums))
                 reweight_coeff = reweight_coeff.unsqueeze(-1) * self.task_nums
@@ -128,26 +128,29 @@ class MTSAC(TwinSACQ):
 
         with torch.no_grad():
             if self.idx_flag:
-                target_sample_info = self.pf.explore(next_obs,
-                                                    task_idx,
-                                                    return_log_probs=True)
+                target_sample_info = self.pf.explore(
+                    next_obs, task_idx, return_log_probs=True
+                )
             else:
                 if self.pf_flag:
-                    target_sample_info = self.pf.explore(next_obs,
-                                                         embedding_inputs,
-                                                         return_log_probs=True)
+                    target_sample_info = self.pf.explore(
+                        next_obs, embedding_inputs, return_log_probs=True
+                    )
                 else:
-                    target_sample_info = self.pf.explore(next_obs,
-                                                        return_log_probs=True)
+                    target_sample_info = self.pf.explore(
+                        next_obs, return_log_probs=True
+                    )
 
             target_actions = target_sample_info["action"]
             target_log_probs = target_sample_info["log_prob"]
 
             if self.idx_flag:
-                target_q1_pred = self.target_qf1([next_obs, target_actions],
-                                                 task_idx)
-                target_q2_pred = self.target_qf2([next_obs, target_actions],
-                                                 task_idx)
+                target_q1_pred = self.target_qf1(
+                    [next_obs, target_actions], task_idx
+                )
+                target_q2_pred = self.target_qf2(
+                    [next_obs, target_actions], task_idx
+                )
             else:
                 if self.pf_flag:
                     target_q1_pred = self.target_qf1([next_obs, target_actions],

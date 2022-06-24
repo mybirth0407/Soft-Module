@@ -40,7 +40,7 @@ class RLAlgo():
         self.continuous = isinstance(self.env.action_space, gym.spaces.Box)
 
         self.replay_buffer = replay_buffer
-        self.collector = collector        
+        self.collector = collector
         # device specification
         self.device = device
 
@@ -68,8 +68,8 @@ class RLAlgo():
 
         self.save_interval = save_interval
         self.save_dir = save_dir
-        if not osp.exists( self.save_dir ):
-            os.mkdir( self.save_dir )
+        # if not osp.exists( self.save_dir ):
+        #     os.mkdir( self.save_dir )
 
         self.best_eval = None
 
@@ -127,7 +127,7 @@ class RLAlgo():
 
             for reward in eval_infos["eval_rewards"]:
                 self.episode_rewards.append(reward)
-            # del eval_infos["eval_rewards"]
+            del eval_infos["eval_rewards"]
 
             if self.best_eval is None or \
                 np.mean(eval_infos["eval_rewards"]) > self.best_eval:

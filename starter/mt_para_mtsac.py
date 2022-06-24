@@ -1,3 +1,5 @@
+# python starter/mt_para_mtsac.py --config meta_config/mt10/mtmhsac.json --id MT10_Fixed_Modular_Shallow --seed 1 --worker_nums 10 --eval_worker_nums 10
+
 import sys
 # import sys
 sys.path.append(".") 

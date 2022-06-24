@@ -17,6 +17,15 @@ class SingleWrapper(Wrapper):
         self._env = env
         self.action_space = env.action_space
         self.observation_space = env.observation_space
+        self.embedding_dict = dict()
+
+        with open('glove.6B.50d.txt', encoding="utf8") as fp:
+            for line in fp:
+                word_vector = line.split()
+                word = word_vector[0]
+
+                word_vector_arr = np.asarray(word_vector[1:], dtype='float32')
+                self.embedding_dict[word] = word_vector_arr
 
     def reset(self):
         return self._env.reset()
@@ -115,21 +124,28 @@ class MTEnv(MultiClassMultiTaskEnv):
 
         # augment the observation based on obs_type:
         if self._obs_type == 'with_goal_id' or self._obs_type == 'with_goal_and_id':
-
+            ## TODO
             aug_ob = []
             if self._obs_type == 'with_goal_and_id':
                 aug_ob.append(self.active_env._state_goal)
             # if self._obs_type == 'with_goal_and_id':
             #     obs = np.concatenate([obs, self.active_env._state_goal])
-            task_id = self._env_discrete_index[self._task_names[self.active_task]] + (self.active_env.active_discrete_goal or 0)
-            task_onehot = np.zeros(shape=(self._n_discrete_goals,), dtype=np.float32)
-            task_onehot[task_id] = 1.
-            aug_ob.append(task_onehot)
+            # task_id = self._env_discrete_index[self._task_names[self.active_task]] + (self.active_env.active_discrete_goal or 0)
 
+            # task_onehot = np.zeros(shape=(self._n_discrete_goals,), dtype=np.float32)
+            # task_onehot[task_id] = 1.
+            # print(self._task_names[self.active_task])
+            # print(task_onehot)
+            task_onehot = np.zeros(shape=(50,), dtype=np.float32)
+            for tn in self._task_names.split():
+                task_onehot += self.embedding_dict[tn]
+            # print(task_onehot)
+            aug_ob.append(task_onehot)
             obs = np.concatenate([obs] + aug_ob * self.repeat_times)
 
         elif self._obs_type == 'with_goal':
             obs = np.concatenate([obs] + [self.active_env._state_goal] * self.repeat_times )
+
         return obs
 
 

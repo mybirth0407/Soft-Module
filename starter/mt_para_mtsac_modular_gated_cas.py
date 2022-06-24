@@ -1,3 +1,7 @@
+# python starter/mt_para_mtsac_modular_gated_cas.py --config meta_config/mt10/modular_2_2_2_256_reweight.json --id MT10_Fixed_Modular_Shallow --seed 2022 --worker_nums 10 --eval_worker_nums 10 --log_dir ./log
+
+# python torchrl/utils/plot_csv.py --id MT10_Fixed_Modular_Shallow_300 --env_name mt10 --entry "mean_success_rate" --add_tag fixed --seed 2022
+
 import sys
 sys.path.append(".")
 
