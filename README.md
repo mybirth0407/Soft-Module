@@ -33,7 +33,7 @@ Since [MetaWorld](https://meta-world.github.io) is under active development, we 
 
 ```
 #Our MetaWorld installation
-git clone https://github.com/RchalYang/metaworld.git
+git clone https://github.com/mybirth0407/metaworld.git
 cd metaworld
 pip install -e .
 ```
@@ -63,23 +63,6 @@ python starter/mt_para_mtsac_modular_gated_cas.py --config meta_config/mt10/modu
 
 # Modular Network // MT10-Fixed // Deep
 python starter/mt_para_mtsac_modular_gated_cas.py --config meta_config/mt10/modular_4_4_2_128_reweight.json --id MT10_Fixed_Modular_Deep --seed SEED --worker_nums 10 --eval_worker_nums 10
-
-
-# Modular Network // MT50-Conditioned // Shallow
-python starter/mt_para_mtsac_modular_gated_cas.py --config meta_config/mt50/modular_2_2_2_256_reweight_rand.json --id MT50_Conditioned_Modular_Shallow --seed SEED --worker_nums 50 --eval_worker_nums 50
-
-
-# Modular Network // MT50-Fixed // Shallow
-python starter/mt_para_mtsac_modular_gated_cas.py --config meta_config/mt50/modular_2_2_2_256_reweight.json --id MT50_Fixed_Modular_Shallow --seed SEED --worker_nums 50 --eval_worker_nums 50
-
-
-# Modular Network // MT50-Conditioned // Deep
-python starter/mt_para_mtsac_modular_gated_cas.py --config meta_config/mt50/modular_4_4_2_128_reweight_rand.json --id MT50_Conditioned_Modular_Deep --seed SEED --worker_nums 50 --eval_worker_nums 50
-
-
-# Modular Network // MT50-Fixed // Deep
-python starter/mt_para_mtsac_modular_gated_cas.py --config meta_config/mt50/modular_4_4_2_128_reweight.json --id MT50_Fixed_Modular_Deep --seed SEED --worker_nums 50 --eval_worker_nums 50
-
 ```
 
 ## Plot Training Curve
